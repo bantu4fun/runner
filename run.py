@@ -4,17 +4,26 @@ import sys
 import urllib
 import subprocess
 import webbrowser
+import logging
+import traceback
 from bs4 import BeautifulSoup
 from PySide.QtCore import *
 from PySide.QtGui import *
 from runner_ui import Ui_runner
 
-# _fromUtf8 = QString.fromUtf8
+
+logging.basicConfig(filename="runner.log",
+                    format="%(asctime)-15s: %(name)-18s - %(levelname)-8s - %(module)-15s - %(funcName)-20s - %(lineno)-6d - %(message)s",
+                    level=logging.DEBUG)
+
+logger = logging.getLogger(name="main-gui")
 
 class Runner(QMainWindow, Ui_runner):
     def __init__(self, parent=None):
         super(Runner, self).__init__( parent)
         self.setupUi(self)
+
+        logger.debug("Application initialized")
 
         self.settings = QSettings("settings.ini", QSettings.IniFormat)
 
@@ -112,7 +121,19 @@ class LinksThread(QThread):
 
         return self.topics
 
+def unhandled_exception(type, value, exp_traceback):
+    exception = "".join(traceback.format_exception(type, value, exp_traceback))
+    logger.critical(str(exception))
+    sys.exit(1)
+
 if __name__ == '__main__':
+    QCoreApplication.setApplicationName("Runner")
+    QCoreApplication.setApplicationVersion("0.1 Alpha")
+    QCoreApplication.setOrganizationName("KrainaBantu")
+    QCoreApplication.setOrganizationDomain("krainabantu.blogspot.com")
+
+    sys.excepthook = unhandled_exception
+
     app = QApplication(sys.argv)
     myapp = Runner()
     myapp.show()
