@@ -11,7 +11,6 @@ from runner_ui import Ui_runner
 
 # _fromUtf8 = QString.fromUtf8
 
-
 class Runner(QMainWindow, Ui_runner):
     def __init__(self, parent=None):
         super(Runner, self).__init__( parent)
@@ -29,6 +28,9 @@ class Runner(QMainWindow, Ui_runner):
         if self.lineEdit.text()[-8:] == "samp.exe" and self.ipEdit.text() != "" and self.portEdit.text() != "":
             self.startButton.setEnabled(True)
 
+        self.ipEdit.editingFinished.connect(self.check)
+        self.portEdit.editingFinished.connect(self.check)
+
         self.openButton.clicked.connect(self.open)
 
         self.startButton.clicked.connect(self.openSamp)
@@ -38,6 +40,18 @@ class Runner(QMainWindow, Ui_runner):
         self.linkButton_3.clicked.connect(self.url_3)
         self.linkButton_4.clicked.connect(self.url_4)
         self.linkButton_5.clicked.connect(self.url_5)
+
+    def check(self):
+        if self.lineEdit.text()[-8:] == "samp.exe":
+            if self.ipEdit.text() == "":
+                self.label.setText(u"Wprowadź IP serwera!")
+            elif self.portEdit.text() == "":
+                self.label.setText(u"Wprowadź PORT serwera!")
+            else:
+                self.label.setText(u"SAMP został załadowany poprawnie,\nwciśnij START, aby połączyć się z serwerem.")
+                self.startButton.setEnabled(True)
+        else:
+            self.label.setText(u"Zła ścieżka do pliku samp.exe")
 
     def url_1(self):
         webbrowser.open(self.load_thread.topics[0][0])
@@ -63,18 +77,7 @@ class Runner(QMainWindow, Ui_runner):
         self.lineEdit.setReadOnly(True)
 
         self.label.setText(file_path[0])
-        if file_path[0][-8:] == 'samp.exe':
-            # self.openSamp(file_path[0] + ' 127.0.0.1:7777')
-            if self.ipEdit.text() == "" or self.portEdit.text() == "":
-                self.label.setText(u"Wpisz IP oraz PORT serwera!")
-            else:
-                self.label.setText(u"SAMP został załadowany poprawnie,\nwciśnij START, aby połączyć się z serwerem.")
-                self.settings.setValue("sampPath", file_path[0])
-                self.settings.setValue("IP", self.ipEdit.text())
-                self.settings.setValue("Port", self.portEdit.text())
-                self.startButton.setEnabled(True)
-        else:
-            self.label.setText(u"Zły plik")
+        self.check()
 
     def openSamp(self):
         samp_exe = self.lineEdit.text()

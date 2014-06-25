@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'runner.ui'
 #
-# Created: Wed Jun 25 16:13:39 2014
+# Created: Wed Jun 25 19:04:43 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -126,6 +126,7 @@ class Ui_runner(object):
     def retranslateUi(self, runner):
         runner.setWindowTitle(QtGui.QApplication.translate("runner", "Runner", None, QtGui.QApplication.UnicodeUTF8))
         self.openButton.setText(QtGui.QApplication.translate("runner", "Otwórz", None, QtGui.QApplication.UnicodeUTF8))
+        self.lineEdit.setPlaceholderText(QtGui.QApplication.translate("runner", "Otwórz plik samp.exe", None, QtGui.QApplication.UnicodeUTF8))
         self.titleLabel.setText(QtGui.QApplication.translate("runner", "Najnowsze tematy na Pawno.pl", None, QtGui.QApplication.UnicodeUTF8))
         self.linkButton_1.setText(QtGui.QApplication.translate("runner", "Loading...", None, QtGui.QApplication.UnicodeUTF8))
         self.link_1.setText(QtGui.QApplication.translate("runner", "_____________________________________", None, QtGui.QApplication.UnicodeUTF8))
