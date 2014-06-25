@@ -1,0 +1,112 @@
+# -*- coding: utf-8 -*-
+
+import sys
+import urllib
+import subprocess
+import webbrowser
+from bs4 import BeautifulSoup
+from PySide.QtCore import *
+from PySide.QtGui import *
+from runner_ui import Ui_runner
+
+# _fromUtf8 = QString.fromUtf8
+
+
+class Runner(QMainWindow, Ui_runner):
+    def __init__(self, parent=None):
+        super(Runner, self).__init__( parent)
+        self.setupUi(self)
+
+        self.settings = QSettings("settings.ini", QSettings.IniFormat)
+
+        self.load_thread = LinksThread()
+        self.load_thread.start()
+        self.load_thread.finished.connect(self.setLinks)
+
+        self.lineEdit.setText(QDir.toNativeSeparators(self.settings.value("sampPath")))
+        self.ipEdit.setText(self.settings.value("IP"))
+        self.portEdit.setText(self.settings.value("Port"))
+        if self.lineEdit.text()[-8:] == "samp.exe" and self.ipEdit.text() != "" and self.portEdit.text() != "":
+            self.startButton.setEnabled(True)
+
+        self.openButton.clicked.connect(self.open)
+
+        self.startButton.clicked.connect(self.openSamp)
+
+        self.linkButton_1.clicked.connect(self.url_1)
+        self.linkButton_2.clicked.connect(self.url_2)
+        self.linkButton_3.clicked.connect(self.url_3)
+        self.linkButton_4.clicked.connect(self.url_4)
+        self.linkButton_5.clicked.connect(self.url_5)
+
+    def url_1(self):
+        webbrowser.open(self.load_thread.topics[0][0])
+    def url_2(self):
+        webbrowser.open(self.load_thread.topics[1][0])
+    def url_3(self):
+        webbrowser.open(self.load_thread.topics[2][0])
+    def url_4(self):
+        webbrowser.open(self.load_thread.topics[3][0])
+    def url_5(self):
+        webbrowser.open(self.load_thread.topics[4][0])
+
+    def setLinks(self):
+        self.linkButton_1.setText(self.load_thread.topics[0][1])
+        self.linkButton_2.setText(self.load_thread.topics[1][1])
+        self.linkButton_3.setText(self.load_thread.topics[2][1])
+        self.linkButton_4.setText(self.load_thread.topics[3][1])
+        self.linkButton_5.setText(self.load_thread.topics[4][1])
+
+    def open(self):
+        file_path = QFileDialog.getOpenFileName()
+        self.lineEdit.setText(QDir.toNativeSeparators(file_path[0]))
+        self.lineEdit.setReadOnly(True)
+
+        self.label.setText(file_path[0])
+        if file_path[0][-8:] == 'samp.exe':
+            # self.openSamp(file_path[0] + ' 127.0.0.1:7777')
+            if self.ipEdit.text() == "" or self.portEdit.text() == "":
+                self.label.setText(u"Wpisz IP oraz PORT serwera!")
+            else:
+                self.label.setText(u"SAMP został załadowany poprawnie,\nwciśnij START, aby połączyć się z serwerem.")
+                self.settings.setValue("sampPath", file_path[0])
+                self.settings.setValue("IP", self.ipEdit.text())
+                self.settings.setValue("Port", self.portEdit.text())
+                self.startButton.setEnabled(True)
+        else:
+            self.label.setText(u"Zły plik")
+
+    def openSamp(self):
+        samp_exe = self.lineEdit.text()
+        ip = self.ipEdit.text()
+        port = self.portEdit.text()
+        subprocess.call(samp_exe + " " + ip + ":" + port)
+
+class LinksThread(QThread):
+
+    topics = []
+
+    def __init__(self):
+        super(LinksThread, self).__init__()
+
+    def run(self):
+        page = urllib.urlopen('http://pawno.pl/')
+        soup = BeautifulSoup(page.read())
+        data = []
+
+        for item in soup.find_all('ul', class_='ipsList_withminiphoto'):
+            if len(item['class']) == 1:
+                data.append(item)
+
+        links = BeautifulSoup(str(data).decode('utf-8'))
+
+        for l in links.find_all('a', class_='ipsType_small'):
+            self.topics.append([l['href'], l.text])
+
+        return self.topics
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    myapp = Runner()
+    myapp.show()
+    sys.exit(app.exec_())
