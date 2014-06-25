@@ -28,7 +28,9 @@ class Runner(QMainWindow, Ui_runner):
         self.check()
 
         self.ipEdit.editingFinished.connect(self.check)
+        self.ipEdit.returnPressed.connect(self.check)
         self.portEdit.editingFinished.connect(self.check)
+        self.portEdit.returnPressed.connect(self.check)
 
         self.openButton.clicked.connect(self.open)
 
@@ -47,6 +49,9 @@ class Runner(QMainWindow, Ui_runner):
             elif self.portEdit.text() == "":
                 self.label.setText(u"Wprowadź PORT serwera!")
             else:
+                self.settings.setValue("sampPath", self.lineEdit.text())
+                self.settings.setValue("IP", self.ipEdit.text())
+                self.settings.setValue("Port", self.portEdit.text())
                 self.label.setText(u"SAMP został załadowany poprawnie,\nwciśnij START, aby połączyć się z serwerem.")
                 self.startButton.setEnabled(True)
         else:
