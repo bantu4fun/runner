@@ -25,8 +25,7 @@ class Runner(QMainWindow, Ui_runner):
         self.lineEdit.setText(QDir.toNativeSeparators(self.settings.value("sampPath")))
         self.ipEdit.setText(self.settings.value("IP"))
         self.portEdit.setText(self.settings.value("Port"))
-        if self.lineEdit.text()[-8:] == "samp.exe" and self.ipEdit.text() != "" and self.portEdit.text() != "":
-            self.startButton.setEnabled(True)
+        self.check()
 
         self.ipEdit.editingFinished.connect(self.check)
         self.portEdit.editingFinished.connect(self.check)
@@ -51,7 +50,7 @@ class Runner(QMainWindow, Ui_runner):
                 self.label.setText(u"SAMP został załadowany poprawnie,\nwciśnij START, aby połączyć się z serwerem.")
                 self.startButton.setEnabled(True)
         else:
-            self.label.setText(u"Zła ścieżka do pliku samp.exe")
+            self.label.setText(u"Zła ścieżka do pliku samp.exe.\nPodaj poprawną!")
 
     def url_1(self):
         webbrowser.open(self.load_thread.topics[0][0])
