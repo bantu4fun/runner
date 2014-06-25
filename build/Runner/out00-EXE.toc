@@ -1,9 +1,0 @@
-('F:\\python\\simpleApp\\runner\\dist\\Runner.exe',
- False,
- False,
- None,
- None,
- [],
- None,
- False,
- 1403706227L)
