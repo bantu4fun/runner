@@ -3,6 +3,7 @@
 import re
 import sys
 import urllib
+import _winreg
 import subprocess
 import webbrowser
 import logging
@@ -26,18 +27,26 @@ class Runner(QMainWindow, Ui_runner):
 
         logger.debug("Application initialized")
 
+        try:
+            self.key = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, "Software\\SAMP", 0, _winreg.KEY_SET_VALUE | _winreg.KEY_READ)
+        except WindowsError, e:
+            logger.critical(str(e))
+
         self.settings = QSettings("settings.ini", QSettings.IniFormat)
 
         self.load_thread = LinksThread()
         self.load_thread.start()
         self.load_thread.finished.connect(self.setLinks)
 
-        self.lineEdit.setText(QDir.toNativeSeparators(self.settings.value("sampPath")))
+        self.lineEdit.setText(_winreg.QueryValueEx(self.key, "gta_sa_exe")[0][:-10] + "samp.exe")
         self.hostEdit.setText(self.settings.value("Host"))
+        self.nickEdit.setText(_winreg.QueryValueEx(self.key, "PlayerName")[0])
         self.check()
 
         self.hostEdit.editingFinished.connect(self.check)
         self.hostEdit.returnPressed.connect(self.check)
+        self.nickEdit.editingFinished.connect(self.check)
+        self.nickEdit.returnPressed.connect(self.check)
 
         self.openButton.clicked.connect(self.open)
 
@@ -54,7 +63,14 @@ class Runner(QMainWindow, Ui_runner):
             if not re.match("^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}:[0-9]{4}", self.hostEdit.text()):
                 self.label.setText(u"Wprowadź poprawne IP oraz PORT serwera.\nNp. 127.0.0.1:7777")
                 self.startButton.setEnabled(False)
+            elif len(self.nickEdit.text()) > 24:
+                self.label.setText(u"Twój nick jest zbyt długi!")
+                self.startButton.setEnabled(False)
             else:
+                try:
+                    _winreg.SetValueEx(self.key, "PlayerName", 0, _winreg.REG_SZ, self.nickEdit.text())
+                except Exception, e:
+                    logger.critical(str(e))
                 self.settings.setValue("sampPath", self.lineEdit.text())
                 self.settings.setValue("Host", self.hostEdit.text())
                 self.label.setText(u"SAMP został załadowany poprawnie,\nwciśnij START, aby połączyć się z serwerem.")
@@ -90,9 +106,8 @@ class Runner(QMainWindow, Ui_runner):
 
     def openSamp(self):
         samp_exe = self.lineEdit.text()
-        ip = self.ipEdit.text()
-        port = self.portEdit.text()
-        subprocess.call(samp_exe + " " + ip + ":" + port)
+        host = self.hostEdit.text()
+        subprocess.call(samp_exe + " " + host)
 
 class LinksThread(QThread):
 

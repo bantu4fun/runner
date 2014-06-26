@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'runner.ui'
 #
-# Created: Thu Jun 26 12:27:45 2014
+# Created: Thu Jun 26 19:57:51 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -34,7 +34,7 @@ class Ui_runner(object):
         self.lineEdit.setObjectName("lineEdit")
         self.horizontalLayout.addWidget(self.lineEdit)
         self.horizontalLayoutWidget_2 = QtGui.QWidget(self.centralwidget)
-        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(0, 60, 291, 41))
+        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(0, 80, 291, 41))
         self.horizontalLayoutWidget_2.setObjectName("horizontalLayoutWidget_2")
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.horizontalLayoutWidget_2)
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -107,14 +107,17 @@ class Ui_runner(object):
         self.verticalLayout.addWidget(self.linkButton_5)
         self.startButton = QtGui.QPushButton(self.centralwidget)
         self.startButton.setEnabled(False)
-        self.startButton.setGeometry(QtCore.QRect(0, 110, 75, 23))
+        self.startButton.setGeometry(QtCore.QRect(0, 130, 75, 23))
         self.startButton.setObjectName("startButton")
         self.verticalLayoutWidget_2 = QtGui.QWidget(self.centralwidget)
-        self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(0, 30, 291, 31))
+        self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(0, 30, 291, 48))
         self.verticalLayoutWidget_2.setObjectName("verticalLayoutWidget_2")
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.verticalLayoutWidget_2)
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.nickEdit = QtGui.QLineEdit(self.verticalLayoutWidget_2)
+        self.nickEdit.setObjectName("nickEdit")
+        self.verticalLayout_2.addWidget(self.nickEdit)
         self.hostEdit = QtGui.QLineEdit(self.verticalLayoutWidget_2)
         self.hostEdit.setObjectName("hostEdit")
         self.verticalLayout_2.addWidget(self.hostEdit)
@@ -134,5 +137,6 @@ class Ui_runner(object):
         self.linkButton_4.setText(QtGui.QApplication.translate("runner", "Loading...", None, QtGui.QApplication.UnicodeUTF8))
         self.linkButton_5.setText(QtGui.QApplication.translate("runner", "Loading...", None, QtGui.QApplication.UnicodeUTF8))
         self.startButton.setText(QtGui.QApplication.translate("runner", "START!", None, QtGui.QApplication.UnicodeUTF8))
+        self.nickEdit.setPlaceholderText(QtGui.QApplication.translate("runner", "Wprowadź swój nick", None, QtGui.QApplication.UnicodeUTF8))
         self.hostEdit.setPlaceholderText(QtGui.QApplication.translate("runner", "Wprowadź IP oraz PORT serwera", None, QtGui.QApplication.UnicodeUTF8))
 
