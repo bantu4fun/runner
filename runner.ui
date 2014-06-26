@@ -13,13 +13,21 @@
   <property name="windowTitle">
    <string>Runner</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#linkButton_1 {
+	border:none;
+	height: 30px;
+	border-bottom: 1px solid black;
+	padding-bottom: 10px;
+}</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>321</width>
+      <width>291</width>
       <height>31</height>
      </rect>
     </property>
@@ -44,8 +52,8 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>90</y>
-      <width>321</width>
+      <y>60</y>
+      <width>291</width>
       <height>41</height>
      </rect>
     </property>
@@ -62,10 +70,10 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>320</x>
+      <x>303</x>
       <y>0</y>
-      <width>224</width>
-      <height>261</height>
+      <width>241</width>
+      <height>295</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -92,21 +100,14 @@ font-weight: bold;</string>
       <widget class="QPushButton" name="linkButton_1">
        <property name="styleSheet">
         <string notr="true">#linkButton_1 {
-	border: none;
+	border:none;
+	height: 30px;
+	border-bottom: 1px solid black;
+	margin-top: -10px;
 }</string>
        </property>
        <property name="text">
         <string>Loading...</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="link_1">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="text">
-        <string>_____________________________________</string>
        </property>
       </widget>
      </item>
@@ -114,21 +115,15 @@ font-weight: bold;</string>
       <widget class="QPushButton" name="linkButton_2">
        <property name="styleSheet">
         <string notr="true">#linkButton_2 {
-	border: none;
+	border:none;
+	height: 30px;
+	border-bottom: 1px solid black;
+	padding-top: 5px;
+	padding-bottom: 10px;
 }</string>
        </property>
        <property name="text">
         <string>Loading...</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="link_2">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="text">
-        <string>_____________________________________</string>
        </property>
       </widget>
      </item>
@@ -136,21 +131,15 @@ font-weight: bold;</string>
       <widget class="QPushButton" name="linkButton_3">
        <property name="styleSheet">
         <string notr="true">#linkButton_3 {
-	border: none;
+	border:none;
+	height: 30px;
+	border-bottom: 1px solid black;
+	padding-top: 5px;
+	padding-bottom: 10px;
 }</string>
        </property>
        <property name="text">
         <string>Loading...</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="link_3">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="text">
-        <string>_____________________________________</string>
        </property>
       </widget>
      </item>
@@ -158,21 +147,15 @@ font-weight: bold;</string>
       <widget class="QPushButton" name="linkButton_4">
        <property name="styleSheet">
         <string notr="true">#linkButton_4 {
-	border: none;
+	border:none;
+	height: 30px;
+	border-bottom: 1px solid black;
+	padding-bottom: 10px;
+	padding-top: 5px;
 }</string>
        </property>
        <property name="text">
         <string>Loading...</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="link_4">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="text">
-        <string>_____________________________________</string>
        </property>
       </widget>
      </item>
@@ -180,21 +163,13 @@ font-weight: bold;</string>
       <widget class="QPushButton" name="linkButton_5">
        <property name="styleSheet">
         <string notr="true">#linkButton_5 {
-	border: none;
+	border:none;
+	height: 30px;
+	padding-bottom: 35px;
 }</string>
        </property>
        <property name="text">
         <string>Loading...</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="link_5">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="text">
-        <string>_____________________________________</string>
        </property>
       </widget>
      </item>
@@ -207,7 +182,7 @@ font-weight: bold;</string>
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>140</y>
+      <y>110</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -221,22 +196,15 @@ font-weight: bold;</string>
      <rect>
       <x>0</x>
       <y>30</y>
-      <width>321</width>
-      <height>61</height>
+      <width>291</width>
+      <height>31</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <widget class="QLineEdit" name="ipEdit">
+      <widget class="QLineEdit" name="hostEdit">
        <property name="placeholderText">
-        <string>Ustaw IP serwera</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="portEdit">
-       <property name="placeholderText">
-        <string>Ustaw port serwera</string>
+        <string>Wprowadź IP oraz PORT serwera</string>
        </property>
       </widget>
      </item>

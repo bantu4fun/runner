@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import re
 import sys
 import urllib
 import subprocess
@@ -32,14 +33,11 @@ class Runner(QMainWindow, Ui_runner):
         self.load_thread.finished.connect(self.setLinks)
 
         self.lineEdit.setText(QDir.toNativeSeparators(self.settings.value("sampPath")))
-        self.ipEdit.setText(self.settings.value("IP"))
-        self.portEdit.setText(self.settings.value("Port"))
+        self.hostEdit.setText(self.settings.value("Host"))
         self.check()
 
-        self.ipEdit.editingFinished.connect(self.check)
-        self.ipEdit.returnPressed.connect(self.check)
-        self.portEdit.editingFinished.connect(self.check)
-        self.portEdit.returnPressed.connect(self.check)
+        self.hostEdit.editingFinished.connect(self.check)
+        self.hostEdit.returnPressed.connect(self.check)
 
         self.openButton.clicked.connect(self.open)
 
@@ -53,14 +51,12 @@ class Runner(QMainWindow, Ui_runner):
 
     def check(self):
         if self.lineEdit.text()[-8:] == "samp.exe":
-            if self.ipEdit.text() == "":
-                self.label.setText(u"Wprowadź IP serwera!")
-            elif self.portEdit.text() == "":
-                self.label.setText(u"Wprowadź PORT serwera!")
+            if not re.match("^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}:[0-9]{4}", self.hostEdit.text()):
+                self.label.setText(u"Wprowadź poprawne IP oraz PORT serwera.\nNp. 127.0.0.1:7777")
+                self.startButton.setEnabled(False)
             else:
                 self.settings.setValue("sampPath", self.lineEdit.text())
-                self.settings.setValue("IP", self.ipEdit.text())
-                self.settings.setValue("Port", self.portEdit.text())
+                self.settings.setValue("Host", self.hostEdit.text())
                 self.label.setText(u"SAMP został załadowany poprawnie,\nwciśnij START, aby połączyć się z serwerem.")
                 self.startButton.setEnabled(True)
         else:
